@@ -22,27 +22,30 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script>
     $('form').submit(function(e) {
-      e.preventDefault();
-      var v = grecaptcha.getResponse();
+      e.preventDefault()
+      var v = grecaptcha.getResponse()
       if (v.length === 0) {
-        document.getElementById('captcha').innerHTML = "You can't leave Captcha Code empty";
-        return false;
+        $('#captcha').html("You can't leave Captcha Code empty")
+        return false
+      }
+      var data = {
+        client_name: $('#client_name').val(),
+        client_email: $('#client_email').val(),
+        client_phone: $('#client_phone').val(),
+        grecaptcha_response : v,
+        // Make sure any extra attribute fields are in a separate object.
+        attributes: {
+          'attributes-tell-us-about-yourself': $('#attributes-tell-us-about-yourself').val()
+        }
       }
       $.ajax({
         type: 'POST',
         url: 'https://socket.tutorcruncher.com/9c79f14df986a1ec693c/enquiry',
-        data: {
-          client_name: $('#client_name').val(),
-          client_email: $('#client_email').val(),
-          client_phone: $('#client_phone').val(),
-          grecaptcha_response : v,
-          // Make sure any extra attribute fields are in a separate object.
-          attributes: {
-            'attributes-tell-us-about-yourself': $('#attributes-tell-us-about-yourself').val()
-          }
-        },
+        data: JSON.stringify(data),
         dataType: 'json'
+      }).done(function() {
+        $('form').html('form successfully submitted. Sticky badge for you!')
       })
-    });
+    })
   </script>
 </html>
