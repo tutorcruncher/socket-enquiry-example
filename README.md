@@ -1,2 +1,3 @@
-# socket-enquiry-example
-An example of an enquiry made without Socket Frontend
+A working example of an enquiry made with TutorCruncher Socket
+
+https://tutorcruncher.github.io/socket-enquiry-example/index.html
